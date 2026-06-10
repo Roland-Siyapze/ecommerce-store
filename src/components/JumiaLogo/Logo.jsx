@@ -5,7 +5,7 @@ export const Logo = () => {
 		<div className="py-4">
 			<img
 				src={ImageLogo}
-				alt="Jumia Logo"
+				alt="Flash Shop Logo"
 				className="w-[10rem] h-[3rem] mt-0"
 			/>
 		</div>

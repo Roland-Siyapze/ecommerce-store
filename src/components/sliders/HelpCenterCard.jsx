@@ -17,7 +17,7 @@ export const HelpCenterCard = () => {
 		{
 			iconlink:
 				"https://ke.jumia.is/cms/2021/W26/CP/new-hp-sliders/icone-2-payment.png",
-			titleLink: "Sell On Jumia",
+			titleLink: "Sell On Flash Shop",
 			descriptionLink: "Millions of Visitors",
 		},
 	];

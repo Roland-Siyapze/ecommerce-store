@@ -1,22 +1,22 @@
 export const help = [
 	"Help Center",
 	"Contact Us",
-	"How to shop on Jumia?",
+	"How to shop on Flash Shop?",
 	"Shipping and delivery",
 
 	"Return Policy",
 	"Dispute Resolution Policy",
 
 	"Corporate and Bulk Purchase",
-	"Advertise with Jumia",
+	"Advertise with Flash Shop",
 	"Report a Product",
 ];
 
 export const aboutJumia = [
 	"About us",
 	"Returns and Refunds Policy",
-	"Jumia Careers",
-	"Jumia Express",
+	"Flash Shop Careers",
+	"Flash Shop Express",
 	"Terms and Conditions",
 	"Privacy Notice",
 	"Cookies Notice",
@@ -24,10 +24,10 @@ export const aboutJumia = [
 ];
 
 export const sales = [
-	"Sell on Jumia",
+	"Sell on Flash Shop",
 	"Become a Sales Consultant",
 	"Become a Logistics Service Partner",
-	"Jumia City Partner Program",
+	"Flash Shop City Partner Program",
 ];
 
 export const countries = [

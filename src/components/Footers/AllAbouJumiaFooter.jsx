@@ -63,15 +63,15 @@ export const AllAbouJumiaFooter = () => {
 							{helpLinks}
 						</div>
 						<div className="font-styling">
-							<h1>ABOUT JUMIA</h1>
+							<h1>ABOUT FLASH SHOP</h1>
 							{aboutLinks}
 						</div>
 						<div className="font-styling">
-							<h1>MAKE MONEY WITH JUMIA</h1>
+							<h1>MAKE MONEY WITH FLASH SHOP</h1>
 							{salesLinks}
 						</div>
 						<div className="font-styling">
-							<h1>JUMIA INTERNATIONAL</h1>
+							<h1>Flash Shop INTERNATIONAL</h1>
 							<div className="h-[7rem] grid grid-cols-2 grid-rows-2 w-[11rem]">
 								{countriestLinks}
 							</div>

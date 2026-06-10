@@ -12,7 +12,7 @@ export const SellBuyFoodNavBar = () => {
 						height="17"
 					/>
 					<span className="text-[11px] text-secondary-text-color ml-1">
-						Sell on Jumia
+						Sell on Flash Shop
 					</span>
 				</div>
 				<div className="flex text-[14px] items-center font-mono ">
