@@ -4,6 +4,7 @@ import { AllAbouJumiaFooter } from './components/Footers/AllAbouJumiaFooter';
 import { FooterPrime } from './components/Footers/FooterPrime';
 import { SellBuyFoodNavBar } from './components/HomePageNavBar/SellBuyFoodNavBar';
 import { PrimeNavbar } from './components/NavBar/PrimeNavbar';
+import { CategoryBanner } from './components/NavigationMenu/CategoryBanner';
 import { HomePage } from './pages/HomePage';
 import { CategoryPage } from './pages/CategoryPage';
 import { ProductPage } from './pages/ProductPage';
@@ -21,6 +22,7 @@ function App() {
           <AddvertBarTop />
           <SellBuyFoodNavBar />
           <PrimeNavbar />
+          <CategoryBanner />
           <Routes>
             <Route exact path="/" element={<HomePage />} />
             <Route path="/category/:slug" element={<CategoryPage />} />
