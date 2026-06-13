@@ -302,6 +302,39 @@ export const GET_PRODUCTS_BY_COLLECTION = gql`
   }
 `;
 
+export const ACCOUNT_REGISTER = gql`
+  mutation AccountRegister($input: AccountRegisterInput!) {
+    accountRegister(input: $input) {
+      user {
+        id
+        email
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const TOKEN_CREATE = gql`
+  mutation TokenCreate($email: String!, $password: String!) {
+    tokenCreate(email: $email, password: $password) {
+      token
+      user {
+        id
+        email
+        firstName
+        lastName
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
 export const CREATE_CHECKOUT = gql`
   mutation CreateCheckout($lines: [CheckoutLineInput!]!, $channel: String!) {
     checkoutCreate(input: { channel: $channel, lines: $lines }) {
@@ -437,6 +470,114 @@ export const REMOVE_FROM_CART = gql`
             currency
           }
         }
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CHECKOUT_EMAIL_UPDATE = gql`
+  mutation CheckoutEmailUpdate($id: ID!, $email: String!) {
+    checkoutEmailUpdate(id: $id, email: $email) {
+      checkout {
+        id
+        email
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CHECKOUT_SHIPPING_ADDRESS_UPDATE = gql`
+  mutation CheckoutShippingAddressUpdate(
+    $id: ID!
+    $shippingAddress: AddressInput!
+  ) {
+    checkoutShippingAddressUpdate(id: $id, shippingAddress: $shippingAddress) {
+      checkout {
+        id
+        shippingMethods {
+          id
+          name
+          price {
+            gross {
+              amount
+              currency
+            }
+          }
+        }
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CHECKOUT_BILLING_ADDRESS_UPDATE = gql`
+  mutation CheckoutBillingAddressUpdate(
+    $id: ID!
+    $billingAddress: AddressInput!
+  ) {
+    checkoutBillingAddressUpdate(id: $id, billingAddress: $billingAddress) {
+      checkout {
+        id
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CHECKOUT_DELIVERY_METHOD_UPDATE = gql`
+  mutation CheckoutDeliveryMethodUpdate($id: ID!, $deliveryMethodId: ID!) {
+    checkoutDeliveryMethodUpdate(id: $id, deliveryMethodId: $deliveryMethodId) {
+      checkout {
+        id
+        totalPrice {
+          gross {
+            amount
+            currency
+          }
+        }
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CHECKOUT_PAYMENT_CREATE = gql`
+  mutation CheckoutPaymentCreate($id: ID!, $input: PaymentInput!) {
+    checkoutPaymentCreate(id: $id, input: $input) {
+      checkout {
+        id
+      }
+      errors {
+        field
+        message
+      }
+    }
+  }
+`;
+
+export const CHECKOUT_COMPLETE = gql`
+  mutation CheckoutComplete($id: ID!) {
+    checkoutComplete(id: $id) {
+      order {
+        id
+        number
       }
       errors {
         field

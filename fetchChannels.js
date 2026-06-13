@@ -3,10 +3,16 @@ const http = require('http');
 const data = JSON.stringify({
   query: `
     query {
-      products(first: 5, channel: "flash-shop", filter: { collections: ["nouveautes"] }) {
-        edges {
-          node {
+      __type(name: "AddressInput") {
+        inputFields {
+          name
+          type {
             name
+            kind
+            ofType {
+              name
+              kind
+            }
           }
         }
       }
@@ -33,7 +39,8 @@ const req = http.request(options, (res) => {
   });
 
   res.on('end', () => {
-    console.log(JSON.stringify(JSON.parse(responseData), null, 2));
+    const json = JSON.parse(responseData);
+    console.log(JSON.stringify({ json }, null, 2));
   });
 });
 

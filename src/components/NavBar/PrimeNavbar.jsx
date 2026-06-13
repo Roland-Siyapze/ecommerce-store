@@ -7,10 +7,13 @@ import { Button } from "../Button";
 import { useNavigate, Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 
+import { useAuth } from "../../context/AuthContext";
+
 export const PrimeNavbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const { cartCount } = useCart();
+  const { user, logout } = useAuth();
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -44,11 +47,24 @@ export const PrimeNavbar = () => {
             className="shadow-lg uppercase border rounded-[5px]">
             Rechercher
           </Button>
-          <Button primary className="pl-2">
-            <Icon icon="clarity:avatar-line" color="#313133" height="26" className="mr-[4px]" />
-            Compte
-            <Icon icon="material-symbols:keyboard-arrow-down-rounded" color="#313133" height="20" className="mx-[4px]" />
-          </Button>
+          {user ? (
+            <div className="flex items-center gap-2 px-2">
+              <Icon icon="clarity:avatar-line" color="#313133" height="26" />
+              <span className="text-sm font-medium text-gray-700">
+                Bonjour, {user.firstName || user.email.split('@')[0]}
+              </span>
+              <Button primary onClick={() => { logout(); navigate('/'); }} className="text-xs text-secondary-text-color ml-2">
+                Déconnexion
+              </Button>
+            </div>
+          ) : (
+            <Link to="/login">
+              <Button primary className="pl-2">
+                <Icon icon="clarity:avatar-line" color="#313133" height="26" className="mr-[4px]" />
+                Se connecter
+              </Button>
+            </Link>
+          )}
           <Button primary>
             <Icon icon="material-symbols:help-outline" color="#313133" height="26" className="mx-[4px]" />
             Aide
