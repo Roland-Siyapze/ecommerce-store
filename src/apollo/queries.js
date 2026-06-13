@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { CHANNEL_ID } from '../config/constants';
 
 export const GET_PRODUCTS = gql`
   query GetProducts(
@@ -245,6 +244,57 @@ export const SEARCH_PRODUCTS = gql`
           category {
             name
             slug
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_PRODUCTS_BY_COLLECTION = gql`
+  query GetProductsByCollection(
+    $slug: String!
+    $channel: String!
+    $first: Int!
+  ) {
+    collection(slug: $slug, channel: $channel) {
+      id
+      name
+      products(first: $first) {
+        edges {
+          node {
+            id
+            name
+            slug
+            thumbnail {
+              url
+            }
+            pricing {
+              priceRange {
+                start {
+                  gross {
+                    amount
+                    currency
+                  }
+                }
+                stop {
+                  gross {
+                    amount
+                    currency
+                  }
+                }
+              }
+              discount {
+                gross {
+                  amount
+                  currency
+                }
+              }
+            }
+            category {
+              name
+              slug
+            }
           }
         }
       }

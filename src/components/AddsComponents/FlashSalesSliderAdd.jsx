@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS } from "../../apollo/queries";
+import { GET_PRODUCTS_BY_COLLECTION } from "../../apollo/queries";
 import { AddsSalesTitle } from "../AddsSalesTitle";
 import AddsTopTitleDescription from "../AddsTopTitleDescription";
 import { Icon } from "@iconify/react";
@@ -10,17 +10,18 @@ import { ImagesSlidesAddsList } from "../SlidesImagesFlashDescription/ImagesSlid
 import { CHANNEL_ID } from "../../config/constants";
 
 function FlashSalesSliderAdd() {
-  const { data, loading, error } = useQuery(GET_PRODUCTS, {
-    variables: { first: 8, channel: CHANNEL_ID },
+  const { data, loading, error } = useQuery(GET_PRODUCTS_BY_COLLECTION, {
+    variables: { slug: "flash-deals", first: 8, channel: CHANNEL_ID },
   });
 
   // Transform Saleor data to match your existing ImagesSlidesAddsList format
-  const products = data?.products?.edges?.map(({ node }, index) => ({
-    id: index,
+  const products = data?.collection?.products?.edges?.map(({ node }, index) => ({
+    id: node.id || index,
+    slug: node.slug,
     image: node.thumbnail?.url || "",
     name: node.name,
-    price: `FCFA ${node.pricing?.priceRange?.start?.gross?.amount?.toLocaleString()}`,
-    cost: `FCFA ${node.pricing?.priceRange?.stop?.gross?.amount?.toLocaleString()}`,
+    price: node.pricing?.priceRange?.start?.gross?.amount ? `FCFA ${node.pricing.priceRange.start.gross.amount.toLocaleString()}` : 'FCFA 0',
+    cost: node.pricing?.priceRange?.stop?.gross?.amount ? `FCFA ${node.pricing.priceRange.stop.gross.amount.toLocaleString()}` : '',
   })) || [];
 
   return (

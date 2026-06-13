@@ -1,19 +1,34 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
+import { GET_CATEGORY_BY_SLUG } from "../../apollo/queries";
 import { AddsSalesTitle } from "../AddsSalesTitle";
 import AddsTopTitleDescription from "../AddsTopTitleDescription";
 import { ImagesSlidesAddsList } from "../SlidesImagesFlashDescription/ImagesSlidesAddsList";
-import { flashSalesAlcoholData } from "../../utils/FlashSalesDataAdds";
 import { Icon } from "@iconify/react";
 import { Button } from "../Button";
+import { CHANNEL_ID } from "../../config/constants";
 
 export const AlcoholDrinkSliderAdd = () => {
+	const { data, loading, error } = useQuery(GET_CATEGORY_BY_SLUG, {
+		variables: { slug: "sante-beaute", channel: CHANNEL_ID, first: 8 },
+	});
+
+	const products = data?.category?.products?.edges?.map(({ node }, index) => ({
+		id: node.id || index,
+		slug: node.slug,
+		image: node.thumbnail?.url || "",
+		name: node.name,
+		price: node.pricing?.priceRange?.start?.gross?.amount ? `FCFA ${node.pricing.priceRange.start.gross.amount.toLocaleString()}` : 'FCFA 0',
+		cost: node.pricing?.priceRange?.stop?.gross?.amount ? `FCFA ${node.pricing.priceRange.stop.gross.amount.toLocaleString()}` : '',
+	})) || [];
+
 	return (
 		<div className="w-full mt-4 border-rounded rounded bg-primary-page-color ">
 			<AddsSalesTitle>
 				<AddsTopTitleDescription className="bg-alcohol-theme-color text-primary-font-color align-middle font-normal text-[1.2rem] capitalise">
 					<div className="flex items-center text-40">
 						<span className="ml-2">
-							Sherehe iko Flash Shop | Up to 40% Off on Alcoholic Drinks
+							Santé & Beauté | Up to 40% Off
 						</span>
 					</div>
 
@@ -22,8 +37,10 @@ export const AlcoholDrinkSliderAdd = () => {
 						<Icon icon="material-symbols:chevron-right-rounded" height="25" />
 					</Button>
 				</AddsTopTitleDescription>
-				{/* Images sliders goes here */}
-				<ImagesSlidesAddsList images={flashSalesAlcoholData} />
+
+				{loading && <p className="p-4">Loading products...</p>}
+				{error && <p className="p-4 text-red-500">Error loading products.</p>}
+				{!loading && <ImagesSlidesAddsList images={products} />}
 			</AddsSalesTitle>
 		</div>
 	);

@@ -2,24 +2,12 @@ const http = require('http');
 
 const data = JSON.stringify({
   query: `
-    mutation {
-      checkoutCreate(input: {
-        channel: "flash-shop",
-        shippingAddress: { country: CM },
-        lines: [
-          {
-            quantity: 1,
-            variantId: "UHJvZHVjdFZhcmlhbnQ6NjA3"
+    query {
+      products(first: 5, channel: "flash-shop", filter: { collections: ["nouveautes"] }) {
+        edges {
+          node {
+            name
           }
-        ]
-      }) {
-        checkout {
-          id
-        }
-        errors {
-          field
-          message
-          code
         }
       }
     }
