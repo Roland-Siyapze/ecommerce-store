@@ -3,13 +3,14 @@ import { useLocation, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { SEARCH_PRODUCTS } from "../apollo/queries";
 import { PageContainerPosition } from "../components/PageContainerPosition";
+import { CHANNEL_ID } from "../config/constants";
 
 export const SearchPage = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("q") || "";
 
   const { data, loading } = useQuery(SEARCH_PRODUCTS, {
-    variables: { query, channel: "default-channel", first: 24 },
+    variables: { query, channel: CHANNEL_ID, first: 24 },
     skip: !query,
   });
 

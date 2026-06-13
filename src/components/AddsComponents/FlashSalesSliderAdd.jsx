@@ -7,10 +7,11 @@ import { Icon } from "@iconify/react";
 import { Button } from "../Button";
 import { CountdownTimer } from "../CountdownTimer";
 import { ImagesSlidesAddsList } from "../SlidesImagesFlashDescription/ImagesSlidesAddsList";
+import { CHANNEL_ID } from "../../config/constants";
 
 function FlashSalesSliderAdd() {
   const { data, loading, error } = useQuery(GET_PRODUCTS, {
-    variables: { first: 8, channel: "default-channel" },
+    variables: { first: 8, channel: CHANNEL_ID },
   });
 
   // Transform Saleor data to match your existing ImagesSlidesAddsList format

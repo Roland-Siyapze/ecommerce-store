@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CATEGORIES, GET_CATEGORY_BY_SLUG } from "../../apollo/queries";
 import { Icon } from "@iconify/react";
 import { CardBoarder } from "../CardBoarder";
+import { CHANNEL_ID } from "../../config/constants";
 
 const categoryIcons = {
   "montres-bijoux": "mdi:watch",
@@ -143,7 +144,7 @@ const FullCategoryTree = () => {
 // ── Subcategory sidebar for CategoryPage ──
 const SubCategoryMenu = ({ activeSlug }) => {
   const { data, loading } = useQuery(GET_CATEGORY_BY_SLUG, {
-    variables: { slug: activeSlug, channel: "default-channel", first: 50 },
+    variables: { slug: activeSlug, channel: CHANNEL_ID, first: 50 },
   });
 
   const category = data?.category;

@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_PRODUCT_DETAIL, CREATE_CHECKOUT, ADD_TO_CART } from "../apollo/queries";
 import { useCart } from "../context/CartContext";
 import { Icon } from "@iconify/react";
+import { CHANNEL_ID } from "../config/constants";
 
 export const ProductPage = () => {
   const { slug } = useParams();
@@ -15,7 +16,7 @@ export const ProductPage = () => {
   const [activeTab, setActiveTab] = useState("details");
 
   const { data, loading } = useQuery(GET_PRODUCT_DETAIL, {
-    variables: { slug, channel: "default-channel" },
+    variables: { slug, channel: CHANNEL_ID },
     onCompleted: (data) => {
       if (data?.product?.variants?.length > 0) {
         setSelectedVariant(data.product.variants[0]);
@@ -33,7 +34,7 @@ export const ProductPage = () => {
     try {
       if (!checkoutId) {
         const { data } = await createCheckout({
-          variables: { lines: [{ variantId: selectedVariant.id, quantity }] },
+          variables: { lines: [{ variantId: selectedVariant.id, quantity }], channel: CHANNEL_ID },
         });
         saveCheckout(
           data.checkoutCreate.checkout.id,

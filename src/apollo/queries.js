@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { CHANNEL_ID } from '../config/constants';
 
 export const GET_PRODUCTS = gql`
   query GetProducts(
@@ -252,8 +253,8 @@ export const SEARCH_PRODUCTS = gql`
 `;
 
 export const CREATE_CHECKOUT = gql`
-  mutation CreateCheckout($lines: [CheckoutLineInput!]!) {
-    checkoutCreate(input: { channel: "default-channel", lines: $lines }) {
+  mutation CreateCheckout($lines: [CheckoutLineInput!]!, $channel: String!) {
+    checkoutCreate(input: { channel: $channel, lines: $lines }) {
       checkout {
         id
         token

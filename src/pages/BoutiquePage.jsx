@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "../apollo/queries";
 import { Link } from "react-router-dom";
 import { PageContainerPosition } from "../components/PageContainerPosition";
+import { CHANNEL_ID } from "../config/constants";
 
 const boutiqueNames = {
   orimo: "Orimo",
@@ -18,7 +19,7 @@ export const BoutiquePage = () => {
   const { data, loading } = useQuery(GET_PRODUCTS, {
     variables: {
       first: 24,
-      channel: "default-channel",
+      channel: CHANNEL_ID,
       filter: { search: boutiqueName },
     },
   });

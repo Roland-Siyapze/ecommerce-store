@@ -3,10 +3,11 @@ import { useQuery } from "@apollo/client";
 import { GET_PRODUCTS } from "../apollo/queries";
 import { Link } from "react-router-dom";
 import { PageContainerPosition } from "../components/PageContainerPosition";
+import { CHANNEL_ID } from "../config/constants";
 
 export const PromotionsPage = () => {
   const { data, loading } = useQuery(GET_PRODUCTS, {
-    variables: { first: 24, channel: "default-channel" },
+    variables: { first: 24, channel: CHANNEL_ID },
   });
 
   const products = data?.products?.edges || [];

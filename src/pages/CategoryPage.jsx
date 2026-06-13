@@ -5,6 +5,7 @@ import { GET_CATEGORY_BY_SLUG } from "../apollo/queries";
 import BottomSliderCard from "../components/sliders/BottomSliderCard";
 import { CategoryNavigationMenu } from "../components/NavigationMenu/CategoryNavigationMenu";
 import { Icon } from "@iconify/react";
+import { CHANNEL_ID } from "../config/constants";
 
 export const CategoryPage = () => {
   const { slug, parentSlug } = useParams();
@@ -18,7 +19,7 @@ export const CategoryPage = () => {
   const [priceOpen, setPriceOpen] = useState(true);
 
   const { data, loading, error } = useQuery(GET_CATEGORY_BY_SLUG, {
-    variables: { slug: activeSlug, channel: "default-channel", first: 100 },
+    variables: { slug: activeSlug, channel: CHANNEL_ID, first: 100 },
   });
 
   const category = data?.category;
@@ -27,6 +28,16 @@ export const CategoryPage = () => {
 
   // Filter and sort products client-side
   let products = (category?.products?.edges || []).map(({ node }) => node);
+
+  // Debug logging
+  React.useEffect(() => {
+    if (!loading) {
+      console.log('CategoryPage - Channel:', CHANNEL_ID);
+      console.log('CategoryPage - Category:', category);
+      console.log('CategoryPage - Products:', products);
+      console.log('CategoryPage - Error:', error);
+    }
+  }, [loading, category, products, error]);
 
   if (appliedMin !== null) {
     products = products.filter(

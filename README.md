@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# Flash Shop - Saleor eCommerce Frontend
+
+This is a React-based eCommerce frontend integrated with Saleor GraphQL API.
+
+## 🚨 Products Not Showing?
+
+**Please read [SALEOR_SETUP.md](./SALEOR_SETUP.md) for troubleshooting steps!**
+
+The most common issues are:
+
+- Products are not **published** to the "Flash Shop" channel in Saleor
+- Products don't have **pricing** set for the "Flash Shop" channel
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
