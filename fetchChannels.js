@@ -2,21 +2,24 @@ const http = require('http');
 
 const data = JSON.stringify({
   query: `
-    query {
-      __type(name: "Query") {
-        fields {
-          name
-          args {
-            name
-            type {
-              name
-              kind
-              ofType {
-                name
-                kind
-              }
-            }
+    mutation {
+      checkoutCreate(input: {
+        channel: "flash-shop",
+        shippingAddress: { country: CM },
+        lines: [
+          {
+            quantity: 1,
+            variantId: "UHJvZHVjdFZhcmlhbnQ6NjA3"
           }
+        ]
+      }) {
+        checkout {
+          id
+        }
+        errors {
+          field
+          message
+          code
         }
       }
     }
@@ -30,7 +33,7 @@ const options = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Content-Length': data.length,
+    'Content-Length': Buffer.byteLength(data),
   },
 };
 
@@ -42,17 +45,7 @@ const req = http.request(options, (res) => {
   });
 
   res.on('end', () => {
-    const json = JSON.parse(responseData);
-    const productsField = json.data.__type.fields.find(
-      (f) => f.name === 'products',
-    );
-    console.log(
-      JSON.stringify(
-        productsField.args.find((a) => a.name === 'channel'),
-        null,
-        2,
-      ),
-    );
+    console.log(JSON.stringify(JSON.parse(responseData), null, 2));
   });
 });
 

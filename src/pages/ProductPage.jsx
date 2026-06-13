@@ -8,7 +8,7 @@ import { CHANNEL_ID } from "../config/constants";
 
 export const ProductPage = () => {
   const { slug } = useParams();
-  const { checkoutId, saveCheckout } = useCart();
+  const { checkoutId, saveCheckout, clearCart } = useCart();
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -36,6 +36,24 @@ export const ProductPage = () => {
         const { data } = await createCheckout({
           variables: { lines: [{ variantId: selectedVariant.id, quantity }], channel: CHANNEL_ID },
         });
+
+        if (data.checkoutCreate.errors && data.checkoutCreate.errors.length > 0) {
+          console.error("Checkout create errors:", data.checkoutCreate.errors);
+
+          // Check if there are stock-related errors (e.g. "Only 0 remaining in stock")
+          if (data.checkoutCreate.errors.some(e =>
+              e.message.includes("remaining in stock") ||
+              e.message.includes("out of stock") ||
+              e.code === "INSUFFICIENT_STOCK"
+          )) {
+            alert("Désolé, ce produit est en rupture de stock dans notre entrepôt.");
+            return;
+          }
+
+          alert(`Erreur: ${data.checkoutCreate.errors[0].message}`);
+          return;
+        }
+
         saveCheckout(
           data.checkoutCreate.checkout.id,
           data.checkoutCreate.checkout.lines
@@ -47,6 +65,36 @@ export const ProductPage = () => {
             lines: [{ variantId: selectedVariant.id, quantity }],
           },
         });
+
+        if (data.checkoutLinesAdd.errors && data.checkoutLinesAdd.errors.length > 0) {
+          console.error("Add to cart errors:", data.checkoutLinesAdd.errors);
+
+          // Check if there are stock-related errors
+          if (data.checkoutLinesAdd.errors.some(e =>
+              e.message.includes("remaining in stock") ||
+              e.message.includes("out of stock") ||
+              e.code === "INSUFFICIENT_STOCK"
+          )) {
+            alert("Désolé, ce produit est en rupture de stock dans notre entrepôt.");
+            return;
+          }
+
+          // If checkout is invalid/not found, clear it so user can start over
+          if (data.checkoutLinesAdd.errors.some(e =>
+              e.field === "checkoutId" ||
+              e.field === "id" ||
+              e.message.includes("not found") ||
+              e.message.includes("Couldn't resolve to a node")
+          )) {
+            clearCart();
+            alert("Votre session de panier a expiré. Le panier a été réinitialisé, veuillez cliquer à nouveau sur Ajouter au panier.");
+            return;
+          }
+
+          alert(`Erreur: ${data.checkoutLinesAdd.errors[0].message}`);
+          return;
+        }
+
         saveCheckout(checkoutId, data.checkoutLinesAdd.checkout.lines);
       }
       setAddedToCart(true);
