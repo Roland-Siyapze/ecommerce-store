@@ -71,8 +71,18 @@ export const CategoryPage = () => {
 
   return (
     <div className="bg-primary-bg-page min-h-screen">
-      {/* Top Banner Slider */}
-      <BottomSliderCard />
+      {/* Top Banner Slider or Category Background */}
+      {category?.backgroundImage?.url ? (
+        <div className="max-w-6xl mx-auto mt-4 px-4">
+          <img
+            src={category.backgroundImage.url}
+            alt={category.name}
+            className="w-full h-[400px] object-cover rounded-lg shadow-sm"
+          />
+        </div>
+      ) : (
+        <BottomSliderCard />
+      )}
 
       <div className="max-w-6xl mx-auto px-4 py-4">
         {/* Breadcrumb */}
